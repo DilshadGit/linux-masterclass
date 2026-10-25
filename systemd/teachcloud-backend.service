@@ -1,0 +1,31 @@
+[Unit]
+Description=TeachCloud Production Backend Application Service
+After=network.target remote-fs.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/teachcloud
+ExecStart=/usr/local/bin/gunicorn --workers 4 --bind 127.0.0.1:8000 wsgi:app
+ExecReload=/bin/kill -s HUP $MAINPID
+Restart=always
+RestartSec=5s
+
+# Security Hardening Sandbox Directives
+ProtectSystem=strict
+ProtectHome=true
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+# Resource Limits
+LimitNOFILE=65535
+MemoryMax=1G
+CPUQuota=200%
+
+[Install]
+WantedBy=multi-user.target

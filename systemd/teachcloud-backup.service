@@ -1,0 +1,8 @@
+[Unit]
+Description=TeachCloud Automated Nightly Backup Job
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/02_automated_backup.sh /etc /var/backups
+User=root

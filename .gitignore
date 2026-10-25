@@ -1,3 +1,4 @@
 *.log
 *.tmp
+/var/backups/*
 .DS_Store
